@@ -1,0 +1,239 @@
+{
+  "Routes": [
+
+    //{
+    //  "UpstreamPathTemplate": "/gateway/Orders",
+    //  "DownstreamPathTemplate": "/api/Orders",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "orders-service",
+    //      "Port": 8080
+    //    }
+
+    //  ],
+
+    //  "UpstreamHttpMethod": [ "Get", "Post", "Options" ],
+    //  "UpstreamScheme": "http",
+    //  "FileCacheOptions": {
+    //    "TtlSeconds": 20,
+    //    "Region": "Orders"
+    //  }
+
+    //},
+    {
+      "UpstreamPathTemplate": "/gateway/Orders",
+      "DownstreamPathTemplate": "/api/Orders",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamHttpMethod": [ "Get", "Post", "Options" ],
+      "UpstreamScheme": "http",
+      "QoSOptions": {
+        "TimeoutValue": 20000
+      },
+
+      "AddHeadersToDownstream": {
+        "Authorization": "{UpstreamAuthorization}"
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/Orders/search/orderid/{orderID}",
+      "DownstreamPathTemplate": "/api/Orders/search/orderid/{orderID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/Orders/search/productid/{productID}",
+      "DownstreamPathTemplate": "/api/Orders/search/productid/{productID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/Orders/search/orderDate/{orderDate}",
+      "DownstreamPathTemplate": "/api/Orders/search/orderDate/{orderDate}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/Orders/search/userid/{userID}",
+      "DownstreamPathTemplate": "/api/Orders/search/userid/{userID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/Orders/{orderID}",
+      "DownstreamPathTemplate": "/api/Orders/{orderID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Put", "Delete", "Options" ],
+      "UpstreamScheme": "http"
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/gateway/products",
+      "DownstreamPathTemplate": "/api/products",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "products-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get", "Put", "Delete", "Post", "Options" ],
+      "UpstreamScheme": "http",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 100000,
+        "TimeoutValue": 5000
+      },
+
+      "RetryOptions": {
+        "RetryCount": 3,
+        "RetryOnServerErrors": true,
+        "RetryTimeout": 1000
+      },
+      "RateLimitOptions": {
+        "Limit": 9,
+        "Period": "30s",
+        "HttpStatusCode": 429,
+        "EnableRateLimiting": true,
+        "PeriodTimespan": 15,
+        "ClientWhitelist": [
+          "Client1",
+          "Client2",
+          "Client3"
+        ],
+        "ClientIdHeader": "Client-Id"
+      }
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/products/search/product-id/{ProductID}",
+      "DownstreamPathTemplate": "/api/products/search/product-id/{ProductID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "products-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/products/{ProductID}",
+      "DownstreamPathTemplate": "/api/products/{ProductID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "products-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Delete" ],
+      "UpstreamScheme": "http"
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/products/search/product-id/{SearchString}",
+      "DownstreamPathTemplate": "/api/products/search/product-id/{SearchString}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "products-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    },
+
+
+    {
+      "UpstreamPathTemplate": "/gateway/Auth/register",
+      "DownstreamPathTemplate": "/api/Auth/register",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/Auth/login",
+      "DownstreamPathTemplate": "/api/Auth/login",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamScheme": "http"
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/Users/{userID}",
+      "DownstreamPathTemplate": "/api/Users/{userID}",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "users-service",
+          "Port": 8080
+        }
+      ],
+
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamScheme": "http"
+    }
+  ],
+
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://apigateway"
+  }
+}
